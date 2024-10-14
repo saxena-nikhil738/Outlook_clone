@@ -1,0 +1,146 @@
+body{
+    color: #636363;
+}
+.email-list-container{
+    padding: 30px 60px;
+    background: #f4f5f9;
+    min-height: 800px;
+    position: relative;
+}
+p{
+    margin: 0px;
+}
+.email-list-content{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+.filter-email-btns{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.filter-email-btns p{
+    font-size: 16px;
+}
+.filter-email-btns button{
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    border: 1px solid #f4f5f9;
+}
+.filter-email-btns button:hover{
+    background: #e1e4ea;
+    border: 1px solid #cfd2dc;
+}
+.email-list{
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    width: 100%;
+    /* position: relative; */
+}
+.email-division{
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    width:35%;
+}
+.one-mail{
+    border: 1px solid #cfd2dc;
+    background: white;
+    display: flex;
+    gap: 50px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.one-mail-logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 50px;
+    max-height: 50px;
+    font-size: 30px;
+    border-radius: 60px;
+    background: #e54065;
+    color: white;
+}
+.one-email-data{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+.from, .subject{
+    display: flex;
+    justify-content: start;
+}
+.from span, .subject span{
+    margin-left: 5px;
+    font-weight: 600;
+}
+.short-description{
+    display: flex;
+    justify-content: start;
+    margin: 5px 0px;
+}
+.date-time-fav{
+    display: flex;
+    gap: 30px;
+}
+.fav{
+    color: #e54065;
+    font-weight: 600;
+}
+.email-fullpage{
+    display: flex;
+    gap: 30px;
+    margin-bottom: 100px;
+}
+.email-details{
+    position: relative;
+    min-height: 700px;
+    min-width: 63%;
+    max-width: 63%;
+    border-radius: 8px;
+}
+.close-btn{
+    z-index: 10;
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    background: #f4f5f9;
+    width: auto;
+    height: auto;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;align-items: center;
+    cursor: pointer;
+}
+.pagination{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    position: absolute;
+    bottom: 50px;
+    width: 90%;
+}
+.page-number{
+    display: flex;
+    justify-content: center;align-items: center;
+}
+.move-page{
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.move-page:hover{
+    border-radius: 30px;
+    background: white;
+}
