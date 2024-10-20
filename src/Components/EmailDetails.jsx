@@ -1,12 +1,17 @@
 import axios from "axios";
 import "../styles/EmailDetails.css";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { toast } from "react-toastify";
 
 const EmailDetails = ({ emailBody }) => {
+  // console.log(emailBody);
+  const location = useLocation();
+  // const emailBody = location.state?.item;
   const navigate = useNavigate();
+  const parem = useParams();
+  console.log(parem);
   const [emailFullBody, setEmailFullBody] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -23,8 +28,6 @@ const EmailDetails = ({ emailBody }) => {
       JSON.parse(localStorage.getItem("favorites")) || [];
     setMarked(updatedMarkedFavs.includes(id));
   }, [id]);
-
-  console.log(id, marked);
 
   useEffect(() => {
     async function getEmailBody() {

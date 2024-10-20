@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { act, useEffect, useState } from "react";
 import "../styles/EmailList.css";
 import axios from "axios";
 import EmailDetails from "./EmailDetails";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import NavigateNextOutlinedIcon from "@mui/icons-material/NavigateNextOutlined";
-import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useNavigate } from "react-router-dom";
 
 const EmailList = () => {
+  const navigate = useNavigate();
   const [emails, setEmails] = useState([]);
   const [openDetails, setOpenDetails] = useState(false);
-  const [emailBody, setEmailBody] = useState();
+  const [emailBody, setEmailBody] = useState(null);
   const [activeButton, setActiveButton] = useState("unread");
-  const [lastPage, setLastPage] = useState(false);
-  const [pageIndex, setPageIndex] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  // Function to fetch and filter emails based on the specified filter type
   const filterEmails = async (filterType) => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     const reads = JSON.parse(localStorage.getItem("reads")) || [];
+
     try {
       const { data } = await axios.get(
         `https://flipkart-email-mock.vercel.app/`
@@ -39,52 +37,22 @@ const EmailList = () => {
   };
 
   useEffect(() => {
-    filterEmails("unread"); // Call to filter emails only once on mount
-  }, []);
+    handleButtonClick(activeButton);
+  }, [1]);
 
   const handleButtonClick = (buttonType) => {
     setActiveButton(buttonType);
     filterEmails(buttonType);
   };
 
-  const changePage = async (direction) => {
-    setLastPage(false);
-    const newPage = direction === "prev" ? pageIndex - 1 : pageIndex + 1;
-    if (direction === "prev" && pageIndex === 1) {
-      toast.warning("You are on the first page", {
-        position: toast.POSITION_BOTTOM_RIGHT,
-        autoClose: 2000,
-      });
-      return;
-    }
-
-    try {
-      const { data } = await axios.get(
-        `https://flipkart-email-mock.vercel.app/?page=${newPage}`
-      );
-      if (data.list.length === 0) {
-        toast.warning("No more emails available!", {
-          position: toast.POSITION_BOTTOM_RIGHT,
-          autoClose: 2000,
-        });
-        return;
-      }
-      setPageIndex(newPage);
-      setEmails(data.list);
-    } catch (error) {
-      setLastPage(true);
-      console.error(error);
-    }
-  };
-
-  const OpenDetailFun = (email) => {
+  const OpenDetailFun = (item) => {
     const reads = JSON.parse(localStorage.getItem("reads")) || [];
-    if (!reads.includes(email.id)) {
-      reads.push(email.id);
+    if (!reads.includes(item.id)) {
+      reads.push(item.id);
       localStorage.setItem("reads", JSON.stringify(reads));
-      setOpenDetails(true);
-      setEmailBody(email);
     }
+    setOpenDetails(true);
+    setEmailBody(item);
   };
 
   const ExtractDateTime = (dateString) => {
@@ -168,26 +136,6 @@ const EmailList = () => {
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="pagination">
-              <div
-                className={`move-page ${pageIndex === 1 ? "disabled" : ""}`}
-                onClick={pageIndex > 1 ? () => changePage("prev") : null}
-                style={{ opacity: pageIndex === 1 ? 0.5 : 1 }}
-              >
-                <ChevronLeftOutlinedIcon />
-              </div>
-              <div className="page-number">
-                <p>Page: {pageIndex}</p>
-              </div>
-              <div
-                className={`move-page ${lastPage ? "disabled" : ""}`}
-                onClick={!lastPage ? () => changePage("next") : null}
-                style={{ opacity: lastPage ? 0.5 : 1 }}
-              >
-                <NavigateNextOutlinedIcon />
-              </div>
             </div>
 
             {openDetails && (
